@@ -18,5 +18,9 @@ db.connectAsync().then(function() {
 }).then(function() {
   return createTables(db);
 });
-
+/*
+.then(function(){
+  
+});
+*/
 module.exports = db;

@@ -31,6 +31,16 @@ function(req, res) {
   res.render('index');
 });
 
+app.get('/signup', 
+function(req, res) {
+  res.render('signup');
+});
+
+app.get('/login', 
+function(req, res) {
+  res.render('login');
+});
+
 app.get('/links', 
 function(req, res, next) {
   Links.getAll()
@@ -86,7 +96,70 @@ function(req, res, next) {
 // Write your authentication routes here
 /************************************************************/
 
+app.post('/signup', 
+function(req, res, next) {
+  return Users.addOne(req.body)
+  .then(function() {
+    res.redirect('/');
+  })
+  .error(function(error) {
+    res.redirect('/signup');
+  });
+});
 
+  app.post('/login', 
+    function(req, res, next) {
+      var user = req.body.username;
+      if (Users.getOne({ username: user})) {
+        res.redirect('/');
+      } else {
+        res.redirect('/login');
+      }
+  
+      // var existingLink = results[0];
+      // throw existingLink
+    
+    });
+
+// body == {username: ....., password: ....}
+// inserto 
+//make insert query to our db where
+
+  // var uri = req.body.url;
+
+  // if (!util.isValidUrl(uri)) {
+  //   // send back a 404 if link is not valid
+  //   return next({ status: 404 });
+  // }
+
+  // return Links.getOne({ type: 'url', data: uri })
+  // .then(function(results) {
+  //   if (results.length) {
+  //     var existingLink = results[0];
+  //     throw existingLink;
+  //   }
+  //   return util.getUrlTitle(uri);
+  // })
+  // .then(function(title) {
+  //   return Links.addOne({
+  //     url: uri,
+  //     title: title,
+  //     baseUrl: req.headers.origin
+  //   });
+  // })
+  // .then(function() {
+  //   return Links.getOne({ type: 'url', data: uri });
+  // })
+  // .then(function(results) {
+  //   var link = results[0];
+  //   res.status(200).send(link);
+  // })
+  // .error(function(error) {
+  //   next({ status: 500, error: error });
+  // })
+  // .catch(function(link) {
+  //   res.status(200).send(link);
+  // });
 
 /************************************************************/
 // Handle the wildcard route last - if all other routes fail

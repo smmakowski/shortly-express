@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var mysql = require('mysql');
 var request = require('request');
 var httpMocks = require('node-mocks-http');
-
+ 
 var app = require('../server/app.js');
 var schema = require('../server/db/config.js');
 var port = 4568;
@@ -47,8 +47,7 @@ describe('', function() {
     /**************************************************************************************/
     /* TODO: If you create a new MySQL tables, add it to the tablenames collection below. */
     /**************************************************************************************/
-    var tablenames = ['links', 'clicks'
-];
+    var tablenames = ['links', 'clicks', 'users'];
 
     db.connect(function(err) {
       if (err) { return done(err); }
@@ -64,6 +63,12 @@ describe('', function() {
 
   describe('Database Schema:', function() {
     it('contains a users table', function(done) {
+      // db = mysql.createConnection({
+      //   user: 'root',
+      //   password: '',
+      //   database: 'shortly'
+      // });
+
       var queryString = 'SELECT * FROM users';
       db.query(queryString, function(err, results) {
         if (err) { return done(err); }
@@ -111,6 +116,7 @@ describe('', function() {
         password: 'p@ssw0rd'
       };
       db.query('INSERT INTO users SET ?', newUser, function(error, result) {
+        console.log(error);
         var newUserId = result.insertId;
         var otherUser = {
           username: 'Muhammed',
@@ -125,7 +131,7 @@ describe('', function() {
     });
   });
 
-  xdescribe('Account Creation:', function() {
+  describe('Account Creation:', function() {
 
     it('signup creates a new user record', function(done) {
       var options = {
@@ -210,7 +216,7 @@ describe('', function() {
     });
   });
 
-  xdescribe('Account Login:', function() {
+  describe('Account Login:', function() {
 
     beforeEach(function(done) {
       var options = {
@@ -637,22 +643,22 @@ describe('', function() {
       }
     };
 
-    xbeforeEach(function(done) {
-      var options = {
-        'method': 'POST',
-        'followAllRedirects': true,
-        'uri': 'http://127.0.0.1:4568/signup',
-        'json': {
-          'username': 'Vivian',
-          'password': 'Vivian'
-        }
-      };
-      requestWithSession(options, done);
-    });
+    // xbeforeEach(function(done) {
+    //   var options = {
+    //     'method': 'POST',
+    //     'followAllRedirects': true,
+    //     'uri': 'http://127.0.0.1:4568/signup',
+    //     'json': {
+    //       'username': 'Vivian',
+    //       'password': 'Vivian'
+    //     }
+    //   };
+    //   requestWithSession(options, done);
+    // });
 
-    afterEach(function(done) {
-      requestWithSession('http://127.0.0.1:4568/logout', done);
-    });
+    // afterEach(function(done) {
+    //   requestWithSession('http://127.0.0.1:4568/logout', done);
+    // });
 
     describe('Creating new links:', function(done) {
 

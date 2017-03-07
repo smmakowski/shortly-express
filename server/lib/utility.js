@@ -21,3 +21,7 @@ exports.isValidUrl = function(url) {
 // Add additional utility functions below
 /************************************************************/
 
+exports.encrypt = function(password) {
+  var hash = crypto.createHash('sha1').update(password).digest('hex');
+  return hash;
+};
