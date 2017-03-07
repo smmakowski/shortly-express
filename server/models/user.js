@@ -3,15 +3,33 @@ var utils = require('../lib/utility');
 
 // Write you user database model methods here
 
-var getOne = function(query) {
-  var queryString = 'SELECT * FROM users WHERE username = ' + query.username;
+var getOne = function(req, res) {
+  req.body.password = utils.encrypt(req.body.password);
+  var queryString = 'SELECT * FROM users WHERE username ="' + req.body.username + '"';
+  
+  return db.queryAsync(queryString, req.body)
+    .then(function(rows) {
+      // console.log('db', userData.password);
+      // console.log('post', req.body.password);
+      if ((rows[0][0].password === req.body.password) && (rows[0][0].username === req.body.username)) {
+        res.redirect('/');
+      } else {
+        res.redirect('/login');
+      }
+    })
+    .catch(function(error) {
+      res.redirect('/login');
+    });
+};
+
+var getAnotherOne = function(query) {
+  query.password = utils.encrypt(query.password);
+  var queryString = 'SELECT * FROM users WHERE username = ' + query.username + ' AND password = ' + query.password;
   
   return db.queryAsync(queryString, query)
-    .then(function() {
-      return true;
-    })
-    .error(function() {
-      return false;
+    .then(function(data) {
+      return data;
+      
     });
 };
 

@@ -107,59 +107,12 @@ function(req, res, next) {
   });
 });
 
-  app.post('/login', 
+app.post('/login',
     function(req, res, next) {
-      var user = req.body.username;
-      if (Users.getOne({ username: user})) {
-        res.redirect('/');
-      } else {
-        res.redirect('/login');
-      }
-  
+      return Users.getOne(req, res);
       // var existingLink = results[0];
-      // throw existingLink
-    
+      // throw existingLink 
     });
-
-// body == {username: ....., password: ....}
-// inserto 
-//make insert query to our db where
-
-  // var uri = req.body.url;
-
-  // if (!util.isValidUrl(uri)) {
-  //   // send back a 404 if link is not valid
-  //   return next({ status: 404 });
-  // }
-
-  // return Links.getOne({ type: 'url', data: uri })
-  // .then(function(results) {
-  //   if (results.length) {
-  //     var existingLink = results[0];
-  //     throw existingLink;
-  //   }
-  //   return util.getUrlTitle(uri);
-  // })
-  // .then(function(title) {
-  //   return Links.addOne({
-  //     url: uri,
-  //     title: title,
-  //     baseUrl: req.headers.origin
-  //   });
-  // })
-  // .then(function() {
-  //   return Links.getOne({ type: 'url', data: uri });
-  // })
-  // .then(function(results) {
-  //   var link = results[0];
-  //   res.status(200).send(link);
-  // })
-  // .error(function(error) {
-  //   next({ status: 500, error: error });
-  // })
-  // .catch(function(link) {
-  //   res.status(200).send(link);
-  // });
 
 /************************************************************/
 // Handle the wildcard route last - if all other routes fail

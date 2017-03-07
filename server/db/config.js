@@ -32,11 +32,18 @@ module.exports = function(db) {
       UNIQUE (username)\
       );');
   })
+  .then(function() {
+    return db.queryAsync('CREATE TABLE IF NOT EXISTS sessions (\
+      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\
+      hash VARCHAR(255),\
+      user_id INT NULL,\
+      timestamp TIMESTAMP\
+      );');
+  })
   /************************************************************/
   /*          Add additional schema queries here              */
   /************************************************************/
 
   .error(function(err) {
-    console.log(err);
   });
 };
