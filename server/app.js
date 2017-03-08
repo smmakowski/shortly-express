@@ -1,4 +1,4 @@
-var express = require('express');
+                      var express = require('express');
 var path = require('path');
 var util = require('./lib/utility');
 var partials = require('express-partials');
@@ -109,9 +109,8 @@ function(req, res, next) {
 
 app.post('/login',
     function(req, res, next) {
-      return Users.getOne(req, res);
-      // var existingLink = results[0];
-      // throw existingLink 
+      return Users.logIn(req, res);
+      
     });
 
 /************************************************************/
